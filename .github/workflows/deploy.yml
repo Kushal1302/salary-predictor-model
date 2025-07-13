@@ -23,8 +23,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 🔧 Install Serverless Framework v3
-        run: npm install -g serverless@3
+      - name: Install Serverless Framework and Plugins
+        run: |
+          npm install -g serverless@3
+          npm install --save-dev serverless-python-requirements
 
       - name: 🧪 Install Python Dependencies
         run: pip install -r requirements.txt
@@ -34,7 +36,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+          aws-region: eu-central-1
 
       - name: 🚀 Deploy to Lambda
-        run: sls deploy
+        run: serverless deploy
