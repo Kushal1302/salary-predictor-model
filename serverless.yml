@@ -1,0 +1,23 @@
+service: salary-predictor
+
+provider:
+  name: aws
+  runtime: python3.11
+  region: ap-south-1
+  memorySize: 512
+  timeout: 10
+
+functions:
+  api:
+    handler: api.main.app
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: true
